@@ -69,7 +69,7 @@ Python允许为函数的参数提供默认的可选值。尽管这是语言的�
     >>> print A.x, B.x, C.x
     3 2 3
 什么 $%#!&?? 我们只改了A.x，为什么C.x也改了?
-在Python中，类变量在内部当做字典来处理，其遵循常被引用的方法解析顺序（MRO）。所以在上面的代码中，由于class C中的x属性没有找到，它会向上找它的基类（尽管Python支持多重继承，但上面的例子中只有A）。换句话说，class C中没有它自己的x属性，其独立于A。因此，C.x事实上是A.x的引用。
+在Python中，类变量在内部当做字典来处理，其遵循常被引用的[方法解析顺序（MRO）](http://python-history.blogspot.com.ar/2010/06/method-resolution-order.html)。所以在上面的代码中，由于class C中的x属性没有找到，它会向上找它的基类（尽管Python支持多重继承，但上面的例子中只有A）。换句话说，class C中没有它自己的x属性，其独立于A。因此，C.x事实上是A.x的引用。
 
 ### 常见错误 #3: 为 except 指定错误的参数
 假设你有如下一段代码：
@@ -113,7 +113,7 @@ Python是基于LEGB 来进行作用于解析的, LEGB 是 Local, Enclosing, Glob
 这里出什么问题了？
 
 上面的问题之所以会发生是因为当你给作用域中的一个变量赋值时，Python 会自动的把它当做是当前作用域的局部变量，从而会隐藏外部作用域中的同名变量。
-很多人会感到很吃惊，当他们给之前可以正常运行的代码的函数体的某个地方添加了一句赋值语句之后就得到了一个 UnboundLocalError 的错误。  (你可以在这里了解到更多)
+很多人会感到很吃惊，当他们给之前可以正常运行的代码的函数体的某个地方添加了一句赋值语句之后就得到了一个 UnboundLocalError 的错误。  (你可以在[这里](https://docs.python.org/2/faq/programming.html#why-am-i-getting-an-unboundlocalerror-when-the-variable-has-a-value)了解到更多)
 
 尤其是当开发者使用 lists 时，这个问题就更加常见.  请看下面这个例子：
 
@@ -259,7 +259,7 @@ Python一个令人称赞的地方是它有丰富的模块可供我们“开箱�
 
 这可能会导致很怪的问题，例如，你引入了另一个模块，但这个模块要引入一个Python标准库中的模块，由于你定义了一个同名的模块，就会使该模块错误的引入了你的模块，而不是 stdlib 中的模块。这就会出问题了。
 
-因此，我们必须要注意这个问题，以避免使用和Python标准库中相同的模块名。修改你包中的模块名要比通过 Python Enhancement Proposal (PEP) 给Python提建议来修改标准库的模块名容易多了。
+因此，我们必须要注意这个问题，以避免使用和Python标准库中相同的模块名。修改你包中的模块名要比通过[Python Enhancement Proposal (PEP)](http://legacy.python.org/dev/peps/) 给Python提建议来修改标准库的模块名容易多了。
 
 ### 常见错误 #9: 未能解决Python 2和Python 3之间的差异
 
@@ -333,7 +333,7 @@ Python一个令人称赞的地方是它有丰富的模块可供我们“开箱�
     value error
     2
 正常!
-(顺便提一下, 我们的 Python Hiring Guide 讨论了当我们把代码从Python 2 迁移到 Python 3时的其他一些需要知道的重要差异。)
+(顺便提一下, 我们的[Python Hiring Guide](http://www.toptal.com/python#hiring-guide)讨论了当我们把代码从Python 2 迁移到 Python 3时的其他一些需要知道的重要差异。)
 
 ### 常见错误 #10: 误用__del__方法
 
@@ -350,8 +350,8 @@ Python一个令人称赞的地方是它有丰富的模块可供我们“开箱�
     import mod
     mybar = mod.Bar()
 你会得到一个 AttributeError 的异常。
-为什么呢？因为，正如这里所说，当解释器退出的时候，模块中的全局变量都被设置成了None。所以，在上面这个例子中，当 __del__被调用时，foo已经被设置成了None。
-解决方法是使用 atexit.register()代替。用这种方式，当你的程序结束执行时（意思是正常退出），你注册的处理程序会在解释器退出之前执行。
+为什么呢？因为，正如[这里](https://mail.python.org/pipermail/python-bugs-list/2009-January/069209.html)所说，当解释器退出的时候，模块中的全局变量都被设置成了None。所以，在上面这个例子中，当 __del__被调用时，foo已经被设置成了None。
+解决方法是使用[atexit.register()](https://docs.python.org/2/library/atexit.html)代替。用这种方式，当你的程序结束执行时（意思是正常退出），你注册的处理程序会在解释器退出之前执行。
 
 了解了这些，我们可以将上面 mod.py 的代码修改成下面的这样：
 
@@ -371,5 +371,5 @@ Python一个令人称赞的地方是它有丰富的模块可供我们“开箱�
 
 Python是一门强大的并且很灵活的语言，它有很多机制和语言规范来显著的提高你的生产力。和其他任何一门语言或软件一样，如果对它能力的了解有限，这很可能会给你带来阻碍，而不是好处。正如一句谚语所说的那样 “knowing enough to be dangerous”（译者注：意思是自以为已经了解足够了，可以做某事了，但其实不是）。
 熟悉Python的一些关键的细微之处，像本文中所提到的那些（但不限于这些），可以帮助我们更好的去使用语言，从而避免一些常见的陷阱。
-你可以查看“Python 面试官指南” 来获得一些关于如何辨别一个开发者是否是Python专家的建议。
+你可以查看“[Python 面试官指南](http://www.toptal.com/python#hiring-guide)” 来获得一些关于如何辨别一个开发者是否是Python专家的建议。
 我们希望你在这篇文章中找到了一些对你有帮助的东西，并希望你得到你的反馈。
