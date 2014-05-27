@@ -17,6 +17,10 @@
 加载属性文件：LoadMapProp(*ppMap, fnProp)!
 * NumberMap(pMap);
 
+ReadALine():将map.map文件的一行记录读入地名、层级和相关信息到placeNodeInfo_T中
+
+
+
 
 
 
